@@ -2,19 +2,31 @@ using UnityEngine;
 
 public static class GameController
 {
-    private static int score;
-    public static bool isGameOver
-    {
-        get {return score <=0;}
-    }
+    public static int lives { get; private set; }
+    public static float elapsedTime { get; private set; }
+    public static bool isGameOver { get; private set; }
 
     public static void Init()
     {
-        score =4;
+        lives = 3;
+        elapsedTime = 0;
+        isGameOver = false;
     }
 
-    public static void collect()
+    public static void UpdateTimer(float deltaTime)
     {
-        score--;
+        if (isGameOver) return;
+        elapsedTime += deltaTime;
+    }
+
+    public static void LoseLife()
+    {
+        if (isGameOver) return;
+        lives--;
+        if (lives <= 0)
+        {
+            lives = 0;
+            isGameOver = true;
+        }
     }
 }
